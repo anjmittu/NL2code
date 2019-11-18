@@ -1,11 +1,17 @@
 # NL2code
 
-A syntactic neural model for parsing natural language to executable code [paper](https://arxiv.org/abs/1704.01696). 
+A syntactic neural model for parsing natural language to executable code [paper](https://arxiv.org/abs/1704.01696).
 
 ## Dataset and Trained Models
 
 Get serialized datasets and trained models from [here](https://drive.google.com/drive/folders/0B14lJ2VVvtmJWEQ5RlFjQUY2Vzg). Put `models/` and `data/` folders under the root directory of the project.
 
+## Setting up Docker
+Build the docker image
+```
+$ docker build -t intent2code .
+$ docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp intent2code
+```
 ## Usage
 
 To train new model
