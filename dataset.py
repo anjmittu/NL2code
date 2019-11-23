@@ -98,7 +98,7 @@ class Vocab(object):
             return idx
 
 
-replace_punctuation = string.maketrans(string.punctuation, ' '*len(string.punctuation))
+replace_punctuation = str.maketrans(string.punctuation, ' '*len(string.punctuation))
 
 
 def tokenize(str):

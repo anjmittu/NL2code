@@ -81,6 +81,6 @@ def serialize_to_file(obj, path, protocol=pickle.HIGHEST_PROTOCOL):
 
 def deserialize_from_file(path):
     f = open(path, 'rb')
-    obj = pickle.load(f)
+    obj = pickle.load(f, encoding='latin1')
     f.close()
     return obj
