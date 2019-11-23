@@ -81,6 +81,6 @@ if __name__ == '__main__':
     tree_code = """(ROOT (IF) (TRIGGER (Instagram) (FUNC (Any_new_photo_by_you) (PARAMS))) (THEN) (ACTION (Dropbox) (FUNC (Add_file_from_URL) (PARAMS (File_URL ({{Caption}})) (File_name ("")) (Dropbox_folder_path (ifttt/instagram))))))"""
     parse_tree = ifttt_ast_to_parse_tree(tree_code)
 
-    print parse_tree
-    print strip_params(parse_tree)
-    print attach_function_to_channel(parse_tree)
+    print(parse_tree)
+    print(strip_params(parse_tree))
+    print(attach_function_to_channel(parse_tree))

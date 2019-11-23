@@ -193,9 +193,9 @@ def parse_django_dataset_for_seq2tree():
             f_test_rawid.write(str(idx) + '\n')
 
         if original_parse_tree != new_tree:
-            print '*' * 50
-            print idx
-            print code
+            print('*' * 50)
+            print(idx)
+            print(code)
 
     f_train.close()
     f_dev.close()
@@ -275,9 +275,9 @@ def parse_hs_dataset_for_seq2tree():
             f_test_rawid.write(str(idx) + '\n')
 
         if original_parse_tree != new_tree:
-            print '*' * 50
-            print idx
-            print code
+            print('*' * 50)
+            print(idx)
+            print(code)
 
     f_train.close()
     f_dev.close()
@@ -289,7 +289,7 @@ def parse_hs_dataset_for_seq2tree():
 
     # print 'num. of decoding time steps distribution:'
     for k in sorted(decode_time_steps):
-        print '%d\t%d' % (k, decode_time_steps[k])
+        print('%d\t%d' % (k, decode_time_steps[k]))
 
 
 if __name__ == '__main__':

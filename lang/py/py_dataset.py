@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from __future__ import division
+
 import ast
 import astor
 import logging
@@ -57,7 +57,7 @@ def extract_grammar(code_file, prefix='py'):
 
         line_num += 1
 
-    print 'total line of code: %d' % line_num
+    print('total line of code: %d' % line_num)
 
     grammar = get_grammar(parse_trees)
 
@@ -88,8 +88,8 @@ def rule_vs_node_stat():
 
         line_num += 1
 
-    print 'avg. nums of nodes: %f' % (node_nums / line_num)
-    print 'avg. nums of rules: %f' % (rule_nums / line_num)
+    print('avg. nums of nodes: %f' % (node_nums / line_num))
+    print('avg. nums of rules: %f' % (rule_nums / line_num))
 
 
 def process_heart_stone_dataset():
@@ -127,7 +127,7 @@ def process_heart_stone_dataset():
             f.write(tree.__repr__() + '\n')
 
 
-    print 'avg. nums of rules: %f' % (rule_num / example_num)
+    print('avg. nums of rules: %f' % (rule_num / example_num))
 
 
 def canonicalize_hs_example(query, code):
@@ -173,7 +173,7 @@ def preprocess_hs_dataset(annot_file, code_file):
 
     f.close()
 
-    print 'preprocess_dataset: cleaned example num: %d' % len(examples)
+    print('preprocess_dataset: cleaned example num: %d' % len(examples))
 
     return examples
 

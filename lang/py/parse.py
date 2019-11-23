@@ -2,7 +2,7 @@ import ast
 import logging
 import re
 import token as tk
-from cStringIO import StringIO
+from io import StringIO
 from tokenize import generate_tokens
 
 from astnode import ASTNode
@@ -400,6 +400,6 @@ class Demonwrath(SpellCard):
     # for leaf in parse_tree.get_leaves():
     #     if leaf.value: print escape(leaf.value)
     #
-    print parse_tree
+    print(parse_tree)
     # ast_tree = parse_tree_to_python_ast(parse_tree)
     # print astor.to_source(ast_tree)

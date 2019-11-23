@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from __future__ import division
+
 import string
 from collections import OrderedDict
 from collections import defaultdict
@@ -8,7 +8,7 @@ from itertools import count
 from nn.utils.io_utils import serialize_to_file, deserialize_from_file
 
 from lang.ifttt.grammar import IFTTTGrammar
-from parse import ifttt_ast_to_parse_tree
+from .parse import ifttt_ast_to_parse_tree
 from lang.grammar import Grammar
 import logging
 from itertools import chain
@@ -88,7 +88,7 @@ def preprocess_ifttt_dataset(annot_file, code_file):
 
     f.close()
 
-    print 'preprocess_dataset: cleaned example num: %d' % len(examples)
+    print('preprocess_dataset: cleaned example num: %d' % len(examples))
 
     return examples
 
@@ -292,7 +292,7 @@ def extract_turk_data():
     lt_three_agree_with_gold = []
     non_english_examples = []
     unintelligible_examples = []
-    for url, annots in annot_data.iteritems():
+    for url, annots in annot_data.items():
         vote_dict = defaultdict(int)
         ref = ref_data[url]
         match_with_gold_num = 0
@@ -304,7 +304,7 @@ def extract_turk_data():
             if annot['trigger_channel'] == ref['trigger_channel'] and annot['trigger_func'] == ref['trigger_func'] and \
                 annot['action_channel'] == ref['action_channel'] and annot['action_func'] == ref['action_func']:
                 match_with_gold_num += 1
-            vote_dict['#'.join(annot.values())] += 1
+            vote_dict['#'.join(list(annot.values()))] += 1
 
         for i, annot in enumerate(annots):
             if annot['trigger_channel'] == 'nonenglish' and annot['trigger_func'] == 'nonenglish' and \
@@ -333,11 +333,11 @@ def extract_turk_data():
 
     omit_non_english_examples = set(annot_data) - set(non_english_examples)
     omit_unintelligible_examples = set(annot_data) - set(unintelligible_examples)
-    print len(omit_non_english_examples) # should be 3,741
-    print len(omit_unintelligible_examples) # should be 2,262
-    print len(lt_three_agree_with_gold) # should be 758
+    print(len(omit_non_english_examples)) # should be 3,741
+    print(len(omit_unintelligible_examples)) # should be 2,262
+    print(len(lt_three_agree_with_gold)) # should be 758
 
-    url2id = defaultdict(count(0).next)
+    url2id = defaultdict(count(0).__next__)
     for url in ref_data:
         url2id[url] = url2id[url] + 77495 + 5171
 
