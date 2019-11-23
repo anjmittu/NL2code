@@ -1,7 +1,7 @@
 from collections import namedtuple
-import cPickle
+import pickle
 from collections import Iterable, OrderedDict, defaultdict
-from cStringIO import StringIO
+from io import StringIO
 
 from lang.util import typename
 
@@ -109,7 +109,7 @@ class ASTNode(object):
         if len(self.children) != len(other.children):
             return False
 
-        for i in xrange(len(self.children)):
+        for i in range(len(self.children)):
             if self.children[i] != other.children[i]:
                 return False
 
@@ -150,7 +150,7 @@ class ASTNode(object):
     def pretty_print_helper(self, sb, depth, new_line=False):
         if new_line:
             sb.write('\n')
-            for i in xrange(depth): sb.write(' ')
+            for i in range(depth): sb.write(' ')
 
         sb.write('(')
         sb.write(typename(self.type))
@@ -170,7 +170,7 @@ class ASTNode(object):
             child.pretty_print_helper(sb, depth + 2, new_line)
 
         sb.write('\n')
-        for i in xrange(depth): sb.write(' ')
+        for i in range(depth): sb.write(' ')
         sb.write(')')
 
     def get_leaves(self):
@@ -320,12 +320,12 @@ if __name__ == '__main__':
         ASTNode('a2', children=[ASTNode('a21', value='asdf')])
     ])
 
-    print t1 == t2
+    print(t1 == t2)
 
 
     a, b = t1.get_productions(include_value_node=True)
 
     # t = ASTNode('root', children=ASTNode('sdf'))
 
-    print t1.__repr__()
-    print t1.pretty_print()
+    print(t1.__repr__())
+    print(t1.pretty_print())

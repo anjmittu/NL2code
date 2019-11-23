@@ -90,7 +90,7 @@ if not args.node_num:
     args.node_num = len(train_data.grammar.node_type_to_id)
 
 config_module = sys.modules['config']
-for name, value in vars(args).iteritems():
+for name, value in vars(args).items():
     setattr(config_module, name, value)
 
 # build the model
@@ -112,30 +112,30 @@ def decode_query(query):
     return cand_list
 
 if __name__ == '__main__':
-    print 'run in interactive mode'
+    print('run in interactive mode')
     while True:
-        query = raw_input('input a query: ')
+        query = input('input a query: ')
         cand_list = decode_query(query)
 
         # output top 5 candidates
         for cid, cand in enumerate(cand_list[:5]):
-            print '*' * 60
-            print 'cand #%d, score: %f' % (cid, cand.score)
+            print('*' * 60)
+            print('cand #%d, score: %f' % (cid, cand.score))
 
             try:
                 ast_tree = decode_tree_to_python_ast(cand.tree)
                 code = astor.to_source(ast_tree)
-                print 'code: ', code
-                print 'decode log: ', cand.log
+                print('code: ', code)
+                print('decode log: ', cand.log)
             except:
-                print "Exception in converting tree to code:"
-                print '-' * 60
-                print 'raw_id: %d, beam pos: %d' % (example.raw_id, cid)
+                print("Exception in converting tree to code:")
+                print('-' * 60)
+                print('raw_id: %d, beam pos: %d' % (example.raw_id, cid))
                 traceback.print_exc(file=sys.stdout)
-                print '-' * 60
+                print('-' * 60)
             finally:
-                print '* parse tree *'
-                print cand.tree.__repr__()
-                print 'n_timestep: %d' % cand.n_timestep
-                print 'ast size: %d' % cand.tree.size
-                print '*' * 60
+                print('* parse tree *')
+                print(cand.tree.__repr__())
+                print('n_timestep: %d' % cand.n_timestep)
+                print('ast size: %d' % cand.tree.size)
+                print('*' * 60)

@@ -132,7 +132,7 @@ def parse_django(code_file):
             parse_tree = parse(code)
             # rule_list = parse_tree.get_rule_list(include_leaf=False)
             parse_trees.append(parse_tree)
-            print parse_tree
+            print(parse_tree)
         except Exception as e:
             error_num += 1
             pass
@@ -140,8 +140,8 @@ def parse_django(code_file):
 
         line_num += 1
 
-    print 'total line of code: %d' % line_num
-    print 'error num: %d' % error_num
+    print('total line of code: %d' % line_num)
+    print('error num: %d' % error_num)
 
     assert error_num == 0
 

@@ -1,7 +1,7 @@
 import ast
 import re
 import sys, inspect
-from StringIO import StringIO
+from io import StringIO
 
 import astor
 from collections import OrderedDict
