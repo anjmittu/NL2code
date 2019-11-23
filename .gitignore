@@ -90,3 +90,5 @@ ENV/
 
 data
 models
+runs
+.idea
