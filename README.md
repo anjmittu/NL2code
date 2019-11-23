@@ -17,13 +17,13 @@ $ docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp intent2code
 To train new model
 
 ```bash
-. train.sh [hs|django]
+./train.sh [hs|django]
 ```
 
 To use trained model for decoding test sets
 
 ```bash
-. run_trained_model.sh [hs|django]
+./run_trained_model.sh [hs|django]
 ```
 
 ## Dependencies
