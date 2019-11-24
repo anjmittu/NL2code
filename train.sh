@@ -16,28 +16,28 @@ else
 fi
 
 # train the model
-THEANO_FLAGS="mode=FAST_RUN,device=${device},floatX=float32" python -u code_gen.py \
+THEANO_FLAGS="mode=DebugMode,device=${device},floatX=float32" python -u code_gen.py \
 	-data_type ${datatype} \
 	-data data/${dataset} \
 	-output_dir ${output} \
 	${commandline} \
 	train
 
-# decode testing set, and evaluate the model which achieves the best bleu and accuracy, resp.
-for model in "model.best_bleu.npz" "model.best_acc.npz"; do
-	THEANO_FLAGS="mode=FAST_RUN,device=${device},floatX=float32" python code_gen.py \
-	-data_type ${datatype} \
-	-data data/${dataset} \
-	-output_dir ${output} \
-	-model ${output}/${model} \
-	${commandline} \
-	decode \
-	-saveto ${output}/${model}.decode_results.test.bin
-
-	python code_gen.py \
-		-data_type ${datatype} \
-		-data data/${dataset} \
-		-output_dir ${output} \
-		evaluate \
-		-input ${output}/${model}.decode_results.test.bin
-done
+# # decode testing set, and evaluate the model which achieves the best bleu and accuracy, resp.
+# for model in "model.best_bleu.npz" "model.best_acc.npz"; do
+# 	THEANO_FLAGS="mode=FAST_RUN,device=${device},floatX=float32" python code_gen.py \
+# 	-data_type ${datatype} \
+# 	-data data/${dataset} \
+# 	-output_dir ${output} \
+# 	-model ${output}/${model} \
+# 	${commandline} \
+# 	decode \
+# 	-saveto ${output}/${model}.decode_results.test.bin
+#
+# 	python code_gen.py \
+# 		-data_type ${datatype} \
+# 		-data data/${dataset} \
+# 		-output_dir ${output} \
+# 		evaluate \
+# 		-input ${output}/${model}.decode_results.test.bin
+# done

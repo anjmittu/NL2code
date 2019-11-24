@@ -250,7 +250,7 @@ class LSTM(Layer):
 
         super(LSTM, self).__init__()
 
-        self.output_dim = output_dim
+        self.output_dim = int(output_dim)
         self.init = initializations.get(init)
         self.inner_init = initializations.get(inner_init)
         self.forget_bias_init = initializations.get(forget_bias_init)
@@ -367,6 +367,7 @@ class BiLSTM(Layer):
 
         params = dict(locals())
         del params['self']
+        del params['__class__']
 
         params['name'] = 'foward_lstm'
         self.forward_lstm = LSTM(**params)
