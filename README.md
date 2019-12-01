@@ -12,6 +12,10 @@ Build the docker image
 $ docker build -t intent2code .
 $ docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp intent2code
 ```
+
+If you are using Docker to run, and the process is killed while running, this may be because you need
+to increase the CPU and Memory docker has access to.  The defaults for docker are normally not enough.
+
 ## Usage
 
 To train new model
