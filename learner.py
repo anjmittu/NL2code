@@ -153,7 +153,7 @@ class Learner(object):
         logging.info('training finished, save the best model')
         np.savez(os.path.join(config.output_dir, 'model.npz'), **best_model_params)
 
-        if config.data_type == 'django' or config.data_type == 'hs':
+        if config.data_type == 'django' or config.data_type == 'hs' or config.data_type == 'conala':
             logging.info('save the best model by accuracy')
             np.savez(os.path.join(config.output_dir, 'model.best_acc.npz'), **best_model_by_acc)
 

@@ -38,13 +38,14 @@ To use trained model for decoding test sets
 * astor 0.6
 
 ## Converting CoNaLa data to be used
-The CoNaLa dataset can be downloaded [from this website](https://conala-corpus.github.io/0).  This data should be added under the folder `./lang/conala/data`.  If you are not using the docker image, you will need to run the following command:
+The CoNaLa dataset can be downloaded [from this website](https://conala-corpus.github.io/0).  This data should be added under the folder `./lang/conala/data`.  
+
+If you are not using the docker image, you will also need to run the following command:
 ```
 $ python -m nltk.downloader punkt
 ```
 
 Once the data is added, the bin file can be created by running:
-
 ```
 $ python lang/conala/convert_dataset.py
 ```

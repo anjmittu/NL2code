@@ -139,7 +139,7 @@ def evaluate_decode_results(dataset, decode_results, verbose=True):
             for literal, place_holder in example.meta_data['str_map'].iteritems():
                 pred_code_for_bleu = pred_code_for_bleu.replace('\'' + place_holder + '\'', literal)
                 # ref_code_for_bleu = ref_code_for_bleu.replace('\'' + place_holder + '\'', literal)
-        elif config.data_type == 'hs':
+        elif config.data_type == 'hs' or config.data_type == 'conala':
             ref_code_for_bleu = ref_code
             pred_code_for_bleu = code
 
@@ -181,7 +181,7 @@ def evaluate_decode_results(dataset, decode_results, verbose=True):
 
             if config.data_type == 'django':
                 f_decode.write(eid_to_annot[example.raw_id] + '\n')
-            elif config.data_type == 'hs':
+            elif config.data_type == 'hs' or config.data_type == 'conala':
                 f_decode.write(' '.join(example.query) + '\n')
 
             f_bleu_eval_ref.write(' '.join(refer_tokens_for_bleu) + '\n')
@@ -220,7 +220,7 @@ def evaluate_decode_results(dataset, decode_results, verbose=True):
                     # convert canonicalized code to raw code
                     for literal, place_holder in example.meta_data['str_map'].iteritems():
                         pred_code_for_bleu = pred_code_for_bleu.replace('\'' + place_holder + '\'', literal)
-                elif config.data_type == 'hs':
+                elif config.data_type == 'hs' or config.data_type == 'conala':
                     pred_code_for_bleu = code
 
                 # we apply Ling Wang's trick when evaluating BLEU scores
@@ -358,7 +358,7 @@ def analyze_decode_results(dataset, decode_results, verbose=True):
             for literal, place_holder in example.meta_data['str_map'].iteritems():
                 pred_code_for_bleu = pred_code_for_bleu.replace('\'' + place_holder + '\'', literal)
                 # ref_code_for_bleu = ref_code_for_bleu.replace('\'' + place_holder + '\'', literal)
-        elif config.data_type == 'hs':
+        elif config.data_type == 'hs' or config.data_type == 'conala':
             ref_code_for_bleu = ref_code
             pred_code_for_bleu = code
 
@@ -422,7 +422,7 @@ def analyze_decode_results(dataset, decode_results, verbose=True):
                     # convert canonicalized code to raw code
                     for literal, place_holder in example.meta_data['str_map'].iteritems():
                         pred_code_for_bleu = pred_code_for_bleu.replace('\'' + place_holder + '\'', literal)
-                elif config.data_type == 'hs':
+                elif config.data_type == 'hs' or config.data_type == 'conala':
                     pred_code_for_bleu = code
 
                 # we apply Ling Wang's trick when evaluating BLEU scores
@@ -495,6 +495,20 @@ def analyze_decode_results(dataset, decode_results, verbose=True):
         # os.system('pcrop.sh django_acc_ast_size.pdf')
         plt.savefig('django_perf_ast_size.pdf', dpi=300)
         os.system('pcrop.sh django_perf_ast_size.pdf')
+    elif config.data_type == 'conala':
+        fig, ax = plt.subplots()
+        ax.plot(X, Y[0], 'bs--', label='BLEU', lw=1.2)
+        # ax.plot(X, Y[2], 'r^--', label='oracle BLEU', lw=1.2)
+        ax.plot(X, Y[1], 'r^--', label='acc', lw=1.2)
+        # ax.plot(X, Y[3], 'r^--', label='oracle acc', lw=1.2)
+        ax.set_ylabel('Performance')
+        ax.set_xlabel('Reference AST Size (# nodes)')
+        plt.legend(loc='upper right', ncol=6)
+        plt.tight_layout()
+        # plt.savefig('hs_bleu_ast_size.pdf', dpi=300)
+        # os.system('pcrop.sh hs_bleu_ast_size.pdf')
+        plt.savefig('conala_perf_ast_size.pdf', dpi=300)
+        os.system('pcrop.sh conala_perf_ast_size.pdf')
     else:
         fig, ax = plt.subplots()
         ax.plot(X, Y[0], 'bs--', label='BLEU', lw=1.2)
@@ -588,7 +602,7 @@ def evaluate_seq2seq_decode_results(dataset, seq2seq_decode_file, seq2seq_ref_fi
             for literal, place_holder in example.meta_data['str_map'].iteritems():
                 pred_code_for_bleu = pred_code_for_bleu.replace('\'' + place_holder + '\'', literal)
                 # ref_code_for_bleu = ref_code_for_bleu.replace('\'' + place_holder + '\'', literal)
-        elif config.data_type == 'hs':
+        elif config.data_type == 'hs' or config.data_type == 'conala':
             ref_code_for_bleu = example.code
             pred_code_for_bleu = code
 
@@ -690,7 +704,7 @@ def evaluate_seq2tree_sample_file(sample_file, id_file, dataset):
             # convert canonicalized code to raw code
             for literal, place_holder in example.meta_data['str_map'].iteritems():
                 pred_code_for_bleu = pred_code_for_bleu.replace('\'' + place_holder + '\'', literal)
-        elif config.data_type == 'hs':
+        elif config.data_type == 'hs' or config.data_type == 'conala':
             ref_code_for_bleu = ref_code
             pred_code_for_bleu = code
 
