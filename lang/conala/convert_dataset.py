@@ -6,7 +6,8 @@ import logging
 import string
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, PROJECT_ROOT)
 from lang.py.parse import parse, parse_tree_to_python_ast, canonicalize_code, get_grammar, parse_raw, \
     de_canonicalize_code, tokenize_code, tokenize_code_adv, de_canonicalize_code_for_seq2seq
 from lang.py.unaryclosure import get_top_unary_closures, apply_unary_closures
@@ -18,9 +19,12 @@ from nn.utils.io_utils import serialize_to_file, deserialize_from_file
 def convert_dataset():
     MAX_QUERY_LENGTH = 70
     WORD_FREQ_CUT_OFF = 3
-    data_file_path = "./data/conala-train.json"
+    data_file_path = os.path.join(PROJECT_ROOT, "lang/conala/data")
 
-    data = preprocess_conala_dataset(data_file_path)
+    # pre-process conala training data
+    data = preprocess_conala_dataset(os.path.join(data_file_path, "conala-train.json"))
+    # pre-process conala test data
+    data.extend(preprocess_conala_dataset(os.path.join(data_file_path, "conala-test.json")))
     parse_trees = [e['parse_tree'] for e in data]
 
     # apply unary closures
@@ -31,9 +35,9 @@ def convert_dataset():
     # build the grammar
     grammar = get_grammar(parse_trees)
 
-    with open('conala.grammar.unary_closure.txt', 'w') as f:
-        for rule in grammar:
-            f.write(rule.__repr__() + '\n')
+    # with open('conala.grammar.unary_closure.txt', 'w') as f:
+    #     for rule in grammar:
+    #         f.write(rule.__repr__() + '\n')
 
     annot_tokens = list(chain(*[e['query_tokens'] for e in data]))
     annot_vocab = gen_vocab(annot_tokens, vocab_size=5000, freq_cutoff=WORD_FREQ_CUT_OFF)
@@ -191,34 +195,25 @@ def convert_dataset():
     test_data.init_data_matrices(max_query_length=70, max_example_action_num=350)
 
     serialize_to_file((train_data, dev_data, test_data),
-                      'data/conala.freq{WORD_FREQ_CUT_OFF}.max_action350.pre_suf.unary_closure.bin'.format(WORD_FREQ_CUT_OFF=WORD_FREQ_CUT_OFF))
+                      os.path.join(PROJECT_ROOT, 'data/conala.freq{WORD_FREQ_CUT_OFF}.max_action350.pre_suf.unary_closure.bin'.format(WORD_FREQ_CUT_OFF=WORD_FREQ_CUT_OFF)))
 
     return train_data, dev_data, test_data
 
 def preprocess_conala_dataset(data_path):
     examples = []
-    with open('./data-parsed/conala_dataset.examples.txt', 'w') as output_examples:
-        with open(data_path, 'r') as data:
-            data_json = json.load(data)
-            for idx, data_example in enumerate(data_json):
-                try:
-                    clean_query_tokens, clean_code, parse_tree = canonicalize_conala_example(data_example)
-                except Exception:
-                    print("Unable to parse example")
-                    print(data_example)
-                    continue
-                example = {'id': idx, 'query_tokens': clean_query_tokens, 'code': clean_code, 'parse_tree': parse_tree,
-                           'str_map': None, 'raw_code': data_example["snippet"]}
-                examples.append(example)
-
-                output_examples.write('*' * 50 + '\n')
-                output_examples.write('example# %d\n' % idx)
-                output_examples.write(' '.join(clean_query_tokens).encode('utf-8').strip() + '\n')
-                output_examples.write('\n')
-                output_examples.write(clean_code.encode('utf-8').strip() + '\n')
-                output_examples.write('*' * 50 + '\n')
-
-                idx += 1
+    with open(data_path, 'r') as data:
+        data_json = json.load(data)
+        for idx, data_example in enumerate(data_json):
+            try:
+                clean_query_tokens, clean_code, parse_tree = canonicalize_conala_example(data_example)
+            except Exception:
+                print("Unable to parse example")
+                print(data_example)
+                continue
+            example = {'id': idx, 'query_tokens': clean_query_tokens, 'code': clean_code, 'parse_tree': parse_tree,
+                       'str_map': None, 'raw_code': data_example["snippet"]}
+            examples.append(example)
+            idx += 1
 
 
     print 'preprocess_dataset: cleaned example num: %d' % len(examples)
