@@ -10,8 +10,9 @@ from nn.utils.generic_utils import init_logging
 
 from model import *
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-DJANGO_ANNOT_FILE = '/Users/yinpengcheng/Research/SemanticParsing/CodeGeneration/en-django/all.anno'
+DJANGO_ANNOT_FILE = os.path.join(PROJECT_ROOT, 'lang/all.anno')
 
 
 def tokenize_for_bleu_eval(code):
@@ -21,6 +22,7 @@ def tokenize_for_bleu_eval(code):
     code = code.replace('"', '`')
     code = code.replace('\'', '`')
     tokens = [t for t in code.split(' ') if t]
+    print(tokens)
 
     return tokens
 

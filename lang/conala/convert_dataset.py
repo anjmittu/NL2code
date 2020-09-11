@@ -42,7 +42,7 @@ def convert_dataset():
     annot_tokens = list(chain(*[e['query_tokens'] for e in data]))
     annot_vocab = gen_vocab(annot_tokens, vocab_size=5000, freq_cutoff=WORD_FREQ_CUT_OFF)
 
-    logging.info('annot vocab. size: %d', annot_vocab.size)
+    print('annot vocab. size: %d', annot_vocab.size)
 
     def get_terminal_tokens(_terminal_str):
         """
